@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>WillBet 🎰</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: crimson;
+    }
+    .menu button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: gold;
+      color: #111;
+    }
+    .roleta {
+      font-size: 40px;
+      margin: 20px;
+    }
+    .saldo {
+      margin-top: 20px;
+      font-size: 18px;
+      color: lightgreen;
+    }
+    .resultado {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .instrucoes {
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: left;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>WillBet 🎰</h1>
+  <div class="menu">
+    <button onclick="jogar()">Jogar</button>
+    <button onclick="adicionarSaldo()">Adicionar saldo</button>
+    <button onclick="mostrarInstrucoes()">Instruções</button>
+    <button onclick="sair()">Sair</button>
+  </div>
+
+  <div class="roleta" id="roleta">[ 🎲 ] [ 🎲 ] [ 🎲 ]</div>
+  <div class="resultado" id="resultado"></div>
+  <div class="saldo" id="saldo">Saldo: R$ 25,00</div>
+
+  <div class="instrucoes" id="instrucoes">
+    <p>Girando a roleta, você pode tirar os seguintes prêmios:</p>
+    <ul>
+      <li>Dupla de qualquer símbolo = R$ 5,00</li>
+      <li>Trinca de qualquer símbolo = R$ 10,00</li>
+      <li>Trinca de bola oito 🎱 = R$ 30,00</li>
+      <li>Dupla de 🚫 = - R$ 10,00</li>
+      <li>Trinca de 🚫 = Perde tudo</li>
+    </ul>
+  </div>
+
+  <script>
+    let saldo = 25;
+    const valor = 5;
+    const roleta = ['🐍','7️⃣','🃏','💎','🎲','🎭','🎱','🚫'];
+
+    function atualizarSaldo() {
+      document.getElementById("saldo").innerText = `Saldo: R$ ${saldo.toFixed(2)}`;
+    }
+
+    function jogar() {
+      if (saldo < valor) {
+        alert("Saldo insuficiente!");
+        return;
+      }
+      saldo -= valor;
+
+      let r1 = roleta[Math.floor(Math.random()*roleta.length)];
+      let r2 = roleta[Math.floor(Math.random()*roleta.length)];
+      let r3 = roleta[Math.floor(Math.random()*roleta.length)];
+
+      document.getElementById("roleta").innerText = `[ ${r1} ] [ ${r2} ] [ ${r3} ]`;
+
+      let resultado = "";
+      if (r1 === r2 && r2 === r3) {
+        if (r1 === '🎱') {
+          resultado = "🎉 JACKPOT! + R$30,00";
+          saldo += 30;
+        } else if (r1 === '🚫') {
+          resultado = "❌ PERDEU TUDO!";
+          saldo = 0;
+        } else {
+          resultado = "Trinca! + R$10,00";
+          saldo += 10;
+        }
+      } else if ((r1==='🚫'&&r2==='🚫')||(r2==='🚫'&&r3==='🚫')||(r1==='🚫'&&r3==='🚫')) {
+        resultado = "Dupla de 🚫 = -R$10,00";
+        saldo -= 10;
+      } else if (r1===r2 || r1===r3 || r2===r3) {
+        resultado = "Dupla! + R$5,00";
+        saldo += 5;
+      } else {
+        resultado = "Derrota 😢";
+      }
+
+      document.getElementById("resultado").innerText = resultado;
+      atualizarSaldo();
+    }
+
+    function adicionarSaldo() {
+      let valorAdd = parseFloat(prompt("Quanto deseja adicionar?"));
+      if (!isNaN(valorAdd) && valorAdd > 0) {
+        saldo += valorAdd;
+        atualizarSaldo();
+      } else {
+        alert("Valor inválido!");
+      }
+    }
+
+    function mostrarInstrucoes() {
+      let box = document.getElementById("instrucoes");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function sair() {
+      alert("Obrigado por jogar!");
+    }
+  </script>
+</body>
+</html>
