@@ -1,143 +1,480 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>WillBet 🎰</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #eee;
-      text-align: center;
-      padding: 20px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WillBet 🎰</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    radial-gradient(circle at top,#3a0b57 0%,#120018 35%,#050505 100%);
+    overflow:hidden;
+    font-family:'Orbitron',sans-serif;
+    color:white;
+}
+
+body::before{
+    content:'';
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:rgba(255,0,255,.12);
+    filter:blur(120px);
+    border-radius:50%;
+    top:-200px;
+    left:-150px;
+    animation:float 8s ease-in-out infinite;
+}
+
+body::after{
+    content:'';
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(0,255,255,.12);
+    filter:blur(120px);
+    border-radius:50%;
+    bottom:-200px;
+    right:-150px;
+    animation:float2 10s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(40px)}
+}
+
+@keyframes float2{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-40px)}
+}
+
+.container{
+    position:relative;
+    width:900px;
+    max-width:95%;
+    padding:40px;
+    border-radius:35px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(25px);
+    box-shadow:
+    0 0 40px rgba(255,0,255,.25),
+    inset 0 0 30px rgba(255,255,255,.05);
+    text-align:center;
+    overflow:hidden;
+}
+
+.container::before{
+    content:'';
+    position:absolute;
+    inset:-2px;
+    border-radius:35px;
+    padding:2px;
+    background:linear-gradient(45deg,#ff00ff,#00ffff,#ffcc00,#ff00ff);
+    background-size:300%;
+    animation:borderFlow 6s linear infinite;
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+}
+
+@keyframes borderFlow{
+    0%{background-position:0 0}
+    100%{background-position:300% 0}
+}
+
+h1{
+    font-size:4rem;
+    margin-bottom:30px;
+    font-weight:900;
+    letter-spacing:4px;
+    background:linear-gradient(90deg,#ffcc00,#ff00ff,#00ffff);
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleFlow 6s linear infinite;
+    text-shadow:0 0 30px rgba(255,255,255,.2);
+}
+
+@keyframes titleFlow{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+.menu{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:18px;
+    margin-bottom:40px;
+}
+
+.menu button{
+    position:relative;
+    padding:15px 28px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    color:white;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 0 15px rgba(255,255,255,.05);
+}
+
+.menu button::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,#ff00ff,#00ffff,#ffcc00);
+    opacity:0;
+    transition:.3s;
+    z-index:-1;
+}
+
+.menu button:hover{
+    transform:translateY(-5px) scale(1.04);
+    box-shadow:
+    0 0 20px #ff00ff,
+    0 0 40px rgba(0,255,255,.4);
+}
+
+.menu button:hover::before{
+    opacity:1;
+}
+
+.roleta{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin:35px 0;
+}
+
+.slot{
+    width:130px;
+    height:130px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:4rem;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:
+    inset 0 0 25px rgba(255,255,255,.08),
+    0 0 25px rgba(255,0,255,.15);
+    animation:pulse 2s infinite;
+    transition:.4s;
+}
+
+.slot:hover{
+    transform:scale(1.08) rotate(4deg);
+}
+
+@keyframes pulse{
+    0%,100%{
+        box-shadow:
+        inset 0 0 20px rgba(255,255,255,.05),
+        0 0 20px rgba(255,0,255,.2);
     }
-    h1 {
-      color: crimson;
+    50%{
+        box-shadow:
+        inset 0 0 35px rgba(255,255,255,.12),
+        0 0 35px rgba(0,255,255,.35);
     }
-    .menu button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background: gold;
-      color: #111;
+}
+
+.girando{
+    animation:spin .12s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform:rotateX(0)}
+    100%{transform:rotateX(360deg)}
+}
+
+.resultado{
+    margin-top:15px;
+    font-size:1.7rem;
+    font-weight:700;
+    min-height:45px;
+    text-shadow:0 0 15px rgba(255,255,255,.5);
+}
+
+.saldo{
+    margin-top:15px;
+    font-size:1.4rem;
+    color:#7CFF7C;
+    text-shadow:0 0 12px #7CFF7C;
+}
+
+.instrucoes{
+    margin-top:30px;
+    padding:25px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    text-align:left;
+    display:none;
+    animation:fade .4s ease;
+}
+
+.instrucoes ul{
+    margin-top:15px;
+    padding-left:20px;
+    line-height:2;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
     }
-    .roleta {
-      font-size: 40px;
-      margin: 20px;
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
-    .saldo {
-      margin-top: 20px;
-      font-size: 18px;
-      color: lightgreen;
+}
+
+.win{
+    color:#00ffae;
+    text-shadow:
+    0 0 15px #00ffae,
+    0 0 30px #00ffae;
+}
+
+.lose{
+    color:#ff3d6e;
+    text-shadow:
+    0 0 15px #ff3d6e,
+    0 0 30px #ff3d6e;
+}
+
+@media(max-width:700px){
+
+    h1{
+        font-size:2.5rem;
     }
-    .resultado {
-      margin-top: 15px;
-      font-size: 20px;
-      font-weight: bold;
+
+    .slot{
+        width:90px;
+        height:90px;
+        font-size:2.8rem;
     }
-    .instrucoes {
-      background: #222;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      text-align: left;
-      display: none;
+
+    .menu{
+        gap:12px;
     }
-  </style>
+
+    .menu button{
+        width:100%;
+    }
+
+    .roleta{
+        gap:10px;
+    }
+}
+</style>
 </head>
+
 <body>
-  <h1>WillBet 🎰</h1>
-  <div class="menu">
-    <button onclick="jogar()">Jogar</button>
-    <button onclick="adicionarSaldo()">Adicionar saldo</button>
-    <button onclick="mostrarInstrucoes()">Instruções</button>
-    <button onclick="sair()">Sair</button>
-  </div>
 
-  <div class="roleta" id="roleta">[ 🎲 ] [ 🎲 ] [ 🎲 ]</div>
-  <div class="resultado" id="resultado"></div>
-  <div class="saldo" id="saldo">Saldo: R$ 25,00</div>
+<div class="container">
 
-  <div class="instrucoes" id="instrucoes">
-    <p>Girando a roleta, você pode tirar os seguintes prêmios:</p>
-    <ul>
-      <li>Dupla de qualquer símbolo = R$ 5,00</li>
-      <li>Trinca de qualquer símbolo = R$ 10,00</li>
-      <li>Trinca de bola oito 🎱 = R$ 30,00</li>
-      <li>Dupla de 🚫 = - R$ 10,00</li>
-      <li>Trinca de 🚫 = Perde tudo</li>
-    </ul>
-  </div>
+<h1>WillBet 🎰</h1>
 
-  <script>
-    let saldo = 25;
-    const valor = 5;
-    const roleta = ['🐍','7️⃣','🃏','💎','🎲','🎭','🎱','🚫'];
+<div class="menu">
+<button onclick="jogar()">Jogar</button>
+<button onclick="adicionarSaldo()">Adicionar saldo</button>
+<button onclick="mostrarInstrucoes()">Instruções</button>
+<button onclick="sair()">Sair</button>
+</div>
 
-    function atualizarSaldo() {
-      document.getElementById("saldo").innerText = `Saldo: R$ ${saldo.toFixed(2)}`;
-    }
+<div class="roleta">
+<div class="slot" id="s1">🎲</div>
+<div class="slot" id="s2">🎲</div>
+<div class="slot" id="s3">🎲</div>
+</div>
 
-    function jogar() {
-      if (saldo < valor) {
-        alert("Saldo insuficiente!");
-        return;
-      }
-      saldo -= valor;
+<div class="resultado" id="resultado"></div>
+<div class="saldo" id="saldo">Saldo: R$ 25,00</div>
 
-      let r1 = roleta[Math.floor(Math.random()*roleta.length)];
-      let r2 = roleta[Math.floor(Math.random()*roleta.length)];
-      let r3 = roleta[Math.floor(Math.random()*roleta.length)];
+<div class="instrucoes" id="instrucoes">
+<p>Girando a roleta, você pode tirar os seguintes prêmios:</p>
 
-      document.getElementById("roleta").innerText = `[ ${r1} ] [ ${r2} ] [ ${r3} ]`;
+<ul>
+<li>Dupla de qualquer símbolo = R$ 5,00</li>
+<li>Trinca de qualquer símbolo = R$ 10,00</li>
+<li>Trinca de 🎱 = R$ 30,00</li>
+<li>Dupla de 🚫 = - R$ 10,00</li>
+<li>Trinca de 🚫 = Perde tudo</li>
+</ul>
+</div>
 
-      let resultado = "";
-      if (r1 === r2 && r2 === r3) {
-        if (r1 === '🎱') {
-          resultado = "🎉 JACKPOT! + R$30,00";
-          saldo += 30;
-        } else if (r1 === '🚫') {
-          resultado = "❌ PERDEU TUDO!";
-          saldo = 0;
-        } else {
-          resultado = "Trinca! + R$10,00";
-          saldo += 10;
-        }
-      } else if ((r1==='🚫'&&r2==='🚫')||(r2==='🚫'&&r3==='🚫')||(r1==='🚫'&&r3==='🚫')) {
-        resultado = "Dupla de 🚫 = -R$10,00";
-        saldo -= 10;
-      } else if (r1===r2 || r1===r3 || r2===r3) {
-        resultado = "Dupla! + R$5,00";
-        saldo += 5;
-      } else {
-        resultado = "Derrota 😢";
-      }
+</div>
 
-      document.getElementById("resultado").innerText = resultado;
-      atualizarSaldo();
-    }
+<script>
 
-    function adicionarSaldo() {
-      let valorAdd = parseFloat(prompt("Quanto deseja adicionar?"));
-      if (!isNaN(valorAdd) && valorAdd > 0) {
-        saldo += valorAdd;
-        atualizarSaldo();
-      } else {
-        alert("Valor inválido!");
-      }
-    }
+let saldo = 25;
+const valor = 5;
 
-    function mostrarInstrucoes() {
-      let box = document.getElementById("instrucoes");
-      box.style.display = box.style.display === "none" ? "block" : "none";
-    }
+const roleta = ['🐍','7️⃣','🃏','💎','🎲','🎭','🎱','🚫'];
 
-    function sair() {
-      alert("Obrigado por jogar!");
-    }
-  </script>
+function atualizarSaldo(){
+document.getElementById("saldo").innerText =
+`Saldo: R$ ${saldo.toFixed(2)}`;
+}
+
+async function jogar(){
+
+if(saldo < valor){
+alert("Saldo insuficiente!");
+return;
+}
+
+saldo -= valor;
+atualizarSaldo();
+
+const slots = [
+document.getElementById('s1'),
+document.getElementById('s2'),
+document.getElementById('s3')
+];
+
+slots.forEach(s=>s.classList.add('girando'));
+
+let animacao = setInterval(()=>{
+
+slots.forEach(slot=>{
+slot.innerText =
+roleta[Math.floor(Math.random()*roleta.length)];
+});
+
+},100);
+
+setTimeout(()=>{
+
+clearInterval(animacao);
+
+let r1 = roleta[Math.floor(Math.random()*roleta.length)];
+let r2 = roleta[Math.floor(Math.random()*roleta.length)];
+let r3 = roleta[Math.floor(Math.random()*roleta.length)];
+
+slots[0].innerText = r1;
+slots[1].innerText = r2;
+slots[2].innerText = r3;
+
+slots.forEach(s=>s.classList.remove('girando'));
+
+let resultado = "";
+let classe = "";
+
+if(r1 === r2 && r2 === r3){
+
+if(r1 === '🎱'){
+resultado = "🎉 JACKPOT! + R$30";
+saldo += 30;
+classe = "win";
+}
+
+else if(r1 === '🚫'){
+resultado = "☠️ PERDEU TUDO!";
+saldo = 0;
+classe = "lose";
+}
+
+else{
+resultado = "🔥 TRINCA! + R$10";
+saldo += 10;
+classe = "win";
+}
+
+}
+
+else if(
+(r1==='🚫'&&r2==='🚫')||
+(r2==='🚫'&&r3==='🚫')||
+(r1==='🚫'&&r3==='🚫')
+){
+resultado = "❌ DUPLA 🚫 -R$10";
+saldo -= 10;
+classe = "lose";
+}
+
+else if(r1===r2 || r1===r3 || r2===r3){
+resultado = "✨ DUPLA! + R$5";
+saldo += 5;
+classe = "win";
+}
+
+else{
+resultado = "😢 DERROTA";
+classe = "lose";
+}
+
+const box = document.getElementById("resultado");
+
+box.className = `resultado ${classe}`;
+box.innerText = resultado;
+
+atualizarSaldo();
+
+},2200);
+
+}
+
+function adicionarSaldo(){
+
+let valorAdd =
+parseFloat(prompt("Quanto deseja adicionar?"));
+
+if(!isNaN(valorAdd) && valorAdd > 0){
+saldo += valorAdd;
+atualizarSaldo();
+}
+
+else{
+alert("Valor inválido!");
+}
+
+}
+
+function mostrarInstrucoes(){
+
+let box = document.getElementById("instrucoes");
+
+box.style.display =
+box.style.display === "block"
+? "none"
+: "block";
+
+}
+
+function sair(){
+alert("Obrigado por jogar!");
+}
+
+</script>
+
 </body>
 </html>
